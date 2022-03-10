@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+    <!-- Carousel -->
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+  <!-- Indicators/dots -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+  </div>
+
+  <!-- The slideshow/carousel -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{ url_for('static', filename='floete.jpg') }}" alt="Zauberflöte" class="d-block w-100">
+      <div class="carousel-caption">
+        <h3>Zauberflöte</h3>
+        <p>Henry Masons Neuinszenierung eröffnet einen frischen Blick auf dieses Werk, das wir längst zu kennen glauben.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{ url_for('static', filename='aida.jpg') }}" alt="Aida" class="d-block w-100">
+      <div class="carousel-caption">
+        <h3>Aida</h3>
+        <p> Willkommen in Ägypten zur Zeit der Pharaonen, dem Schauplatz der grandiosesten Oper Verdis, die gleichzeitig auch das tiefgehendste Drama seines Schaffens darstellt.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{ url_for('static', filename='carmen.jpg') }}" alt="Carmen" class="d-block w-100">
+      <div class="carousel-caption">
+        <h3>Carmen</h3>
+        <p>„Liebe ist wie ein wilder Vogel, wer den will zähmen, der hat es schwer, ganz umsonst wirst du nach ihm rufen, wenn er nicht will, kommt er nicht her“</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Left and right controls/icons -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+{% endblock content %}
