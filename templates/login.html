@@ -5,7 +5,7 @@
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">  </legend>
+            <legend class="border-bottom mb-4"> Willkommen im Kundenbereich </legend>
             <div class="form-group">
                 {{ form.customer_ID.label(class="form-control-label") }}
                 {% if form.customer_ID.errors %}
@@ -20,7 +20,7 @@
                 {% endif %}
 
             </div>
-            <div class="form-group mb-4">
+            <div class="form-group">
                 {{ form.password.label(class="form-control-label") }}
                 {% if form.password.errors %}
                     {{ form.password(class="form-control form-control-lg is-invalid") }}
@@ -33,6 +33,13 @@
                     {{ form.password(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+            <small class="text-muted mb-2">
+            Passwort vergessen? <a class="ms-1" href="#">Reset</a>
+            </small>
+            <div class="form-check mt-3">
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
         </fieldset>
             <div class="form-group mb-2" align="center">
                 {{ form.login(class="btn btn-outline-info") }}
@@ -40,7 +47,7 @@
 
             <div class="text-center">
                 <small class="text-muted">
-            Noch keinen Account? <a class="ms-2" href="{{ url_for('register') }}">Registrieren</a>
+            Noch kein Account? <a class="ms-2" href="{{ url_for('register') }}">Registrieren</a>
                 </small>
             </div>
     </form>

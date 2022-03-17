@@ -11,7 +11,7 @@ def home():
 
 
 @app.route("/plan")
-def about():
+def plan():
     return render_template('plan.html', title='Spielplan & Kartenkauf')
 
 
