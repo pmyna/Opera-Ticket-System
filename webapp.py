@@ -19,15 +19,19 @@ def about():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f'Erfolgreich registriert!', 'success')
+        flash(f'Erfolgreich registriert! \n Ihre Kundennummer für den Login ist 123', 'success') #Kundennummer-Anzeige mit DB verbinden
         return redirect(url_for('home'))
     return render_template('register.html', title='Registrierung', form=form)
 
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    return render_template('login.html', title='Registrierung', form=form)
+    if form.validate_on_submit():
+        if form.customer_ID.data == '123' and form.password.data == 'test1234':
+            flash(f'Erfolgreich eingeloggt', 'success')
+            return redirect(url_for('plan'))
+    return render_template('login.html', title='Login', form=form)
 
 
 if __name__ == '__main__':
