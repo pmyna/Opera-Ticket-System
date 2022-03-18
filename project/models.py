@@ -1,5 +1,5 @@
 from project import db
-import datetime
+from datetime import *
 
 
 class Visitor(db.Model):
@@ -10,12 +10,13 @@ class Visitor(db.Model):
     city = db.Column(db.String(50), nullable=False)
     street = db.Column(db.String(50), nullable=False)
     house_number = db.Column(db.Integer, nullable=False)
-    landline = db.Column(db.Integer)
-    phone_number = db.Column(db.Integer)
+    landline = db.Column(db.Integer, nullable=True)
+    phone_number = db.Column(db.Integer, nullable=True)
+    email = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
-        return f"Visitor('{self.customer_ID}', {self.first_name}, {self.last_name}, {self.zip_code}, {self.city}, {self.street}, {self.house_number})"
+        return f"Visitor('{self.customer_ID}', '{self.first_name}', '{self.last_name}', '{self.email}')"
 
 
 class Opera(db.Model):

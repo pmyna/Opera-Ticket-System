@@ -1,5 +1,5 @@
 from flask import *
-from project import app
+from project import app, db, bcrypt
 from project.form import *
 from project.models import *
 
@@ -19,8 +19,14 @@ def plan():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f'Registrierung erfolgreich! \n Ihre Kundennummer für den Login ist 123', 'success') #Kundennummer-Anzeige mit DB verbinden
-        return redirect(url_for('home'))
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        visitor = Visitor(first_name=form.first_name.data, last_name=form.last_name.data, zip_code=form.zip_code.data,
+                          city=form.city.data, street=form.street.data, house_number=form.house_number.data,
+                          landline=form.landline.data, phone_number=form.phone_number.data, email=form.email.data, password=hashed_password)
+        db.session.add(visitor)
+        db.session.commit()
+        flash(f'Registrierung erfolgreich!', 'success')
+        return redirect(url_for('login'))
     return render_template('register.html', title='Registrierung', form=form)
 
 
@@ -28,10 +34,10 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.customer_ID.data == '123' and form.password.data == 'test1234':
+        if form.email.data == 'test@test.com' and form.password.data == 'test1234':
             flash(f'Erfolgreich eingeloggt', 'success')
             return redirect(url_for('home'))
         else:
-            flash('Kundennummer oder Passwort falsch', 'danger')
+            flash('Email oder Passwort falsch', 'danger')
     return render_template('login.html', title='Login', form=form)
 

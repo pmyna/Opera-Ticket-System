@@ -7,16 +7,16 @@
         <fieldset class="form-group">
             <legend class="border-bottom mb-4"> Willkommen im Kundenbereich </legend>
             <div class="form-group">
-                {{ form.customer_ID.label(class="form-control-label") }}
-                {% if form.customer_ID.errors %}
-                    {{ form.customer_ID(class="form-control form-control-lg is-invalid") }}
+                {{ form.email.label(class="form-control-label") }}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for error in form.customer_ID.errors %}
+                        {% for error in form.email.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.customer_ID(class="form-control form-control-lg") }}
+                    {{ form.email(class="form-control form-control-lg") }}
                 {% endif %}
 
             </div>
