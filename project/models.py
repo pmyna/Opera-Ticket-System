@@ -1,8 +1,14 @@
-from project import db
+from project import db, login_manager
 from datetime import *
+from flask_login import UserMixin
 
 
-class Visitor(db.Model):
+@login_manager.user_loader
+def load_visitor(customer_ID):
+    return Visitor.query.get(customer_ID)
+
+
+class Visitor(db.Model, UserMixin):
     customer_ID = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
@@ -12,11 +18,14 @@ class Visitor(db.Model):
     house_number = db.Column(db.Integer, nullable=False)
     landline = db.Column(db.Integer, nullable=True)
     phone_number = db.Column(db.Integer, nullable=True)
-    email = db.Column(db.String(30), nullable=False)
+    email = db.Column(db.String(), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
-        return f"Visitor('{self.customer_ID}', '{self.first_name}', '{self.last_name}', '{self.email}')"
+        return f"Visitor('{self.customer_ID}', '{self.first_name}', '{self.last_name}', '{self.email}', '{self.password}')"
+
+    def get_id(self):
+        return self.customer_ID
 
 
 class Opera(db.Model):
