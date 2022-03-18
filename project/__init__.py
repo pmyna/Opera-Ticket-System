@@ -10,12 +10,4 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 
-
-def create_db():
-    db.drop_all()
-    db.create_all()
-
-
-create_db()
-
 from project import routes

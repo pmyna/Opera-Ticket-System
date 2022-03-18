@@ -10,6 +10,7 @@ pylint-flask = "*"
 pylint-flask-sqlalchemy = "*"
 flask-bcrypt = "*"
 flask-login = "*"
+email-validator = "*"
 
 [dev-packages]
 

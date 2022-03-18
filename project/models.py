@@ -21,6 +21,7 @@ class Visitor(db.Model, UserMixin):
     email = db.Column(db.String(), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
+    @property
     def __repr__(self):
         return f"Visitor('{self.customer_ID}', '{self.first_name}', '{self.last_name}', '{self.email}', '{self.password}')"
 

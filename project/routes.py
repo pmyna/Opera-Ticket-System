@@ -1,5 +1,5 @@
 from flask import *
-from project import app, db, bcrypt
+from project import app, db
 from project.form import *
 from project.models import *
 from flask_login import login_user, current_user
@@ -22,10 +22,10 @@ def register():
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        #hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         visitor = Visitor(first_name=form.first_name.data, last_name=form.last_name.data, zip_code=form.zip_code.data,
                           city=form.city.data, street=form.street.data, house_number=form.house_number.data,
-                          landline=form.landline.data, phone_number=form.phone_number.data, email=form.email.data, password=hashed_password)
+                          landline=form.landline.data, phone_number=form.phone_number.data, email=form.email.data, password=form.password.data)
         db.session.add(visitor)
         db.session.commit()
         flash(f'Registrierung erfolgreich!', 'success')
@@ -40,9 +40,11 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         visitor = Visitor.query.filter_by(email=form.email.data).first()
-        if visitor and bcrypt.check_password_hash(visitor.password, form.password.data):
+        if visitor and (visitor.password is form.password.data):
             login_user(visitor, remember=form.remember.data)
             return redirect(url_for('home'))
+        elif visitor.password is not form.password.data: #gleiches passwort wird nicht akzeptiert?!
+            flash('BUGGGY SHIT', 'danger')
         else:
             flash('Email oder Passwort falsch', 'danger')
     return render_template('login.html', title='Login', form=form)
