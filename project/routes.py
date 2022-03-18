@@ -1,8 +1,8 @@
 from flask import *
-from form import *
-app = Flask(__name__)
+from project import app
+from project.form import *
+from project.models import *
 
-app.config['SECRET_KEY'] = 'e435f666e9f07eb13be460507c9c12b3'
 
 @app.route("/")
 @app.route("/home")
@@ -35,6 +35,3 @@ def login():
             flash('Kundennummer oder Passwort falsch', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-
-if __name__ == '__main__':
-    app.run(debug=True)

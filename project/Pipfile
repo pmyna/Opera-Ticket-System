@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-wtf = "*"
+pylint-flask = "*"
+pylint-flask-sqlalchemy = "*"
 
 [dev-packages]
 
