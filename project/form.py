@@ -18,11 +18,6 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Passwort bestätigen', [DataRequired(), Length(min=5, max=20), EqualTo('password', message='Passwort stimmt nicht überein')])
     submit = SubmitField('Registrieren')
 
-    def validation_email(self, email):
-        visitor = Visitor.query.filter_by(email=email.data).first()
-        if visitor:
-            raise ValidationError('Email bereits registriert!')
-
 
 class LoginForm(FlaskForm):
     email = StringField('E-Mail', [DataRequired()])

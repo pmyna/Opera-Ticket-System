@@ -3,11 +3,6 @@ from datetime import *
 from flask_login import UserMixin
 
 
-@login_manager.user_loader
-def load_visitor(customer_ID):
-    return Visitor.query.get(customer_ID)
-
-
 class Visitor(db.Model, UserMixin):
     customer_ID = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), nullable=False)
@@ -18,7 +13,7 @@ class Visitor(db.Model, UserMixin):
     house_number = db.Column(db.Integer, nullable=False)
     landline = db.Column(db.Integer, nullable=True)
     phone_number = db.Column(db.Integer, nullable=True)
-    email = db.Column(db.String(), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
     @property
