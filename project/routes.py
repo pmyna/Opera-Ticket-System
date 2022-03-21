@@ -9,13 +9,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html')
+    return render_template('home.html', user=current_user)
 
 
 @app.route("/plan")
 @login_required
 def plan():
-    return render_template('plan.html', title='Spielplan & Kartenkauf')
+    return render_template('plan.html', title='Spielplan & Kartenkauf', user=current_user)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -23,51 +23,52 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RegistrationForm()
-    visitor = Visitor.query.filer_by(email=form.email.data).first()
-    if visitor:
-        flash('Email bereits registriert', 'danger')
-    elif form.validate_on_submit():
-        visitor = Visitor(first_name=form.first_name.data, last_name=form.last_name.data, zip_code=form.zip_code.data,
-                          city=form.city.data, street=form.street.data, house_number=form.house_number.data,
-                          landline=form.landline.data, phone_number=form.phone_number.data, email=form.email.data,
-                          password=generate_password_hash(form.password.data), method='sha256')
-        db.session.add(visitor)
+    if form.validate_on_submit():
+
+        first = request.form.get('first_name')
+        last = request.form.get('last_name')
+        email = request.form.get('email')
+        zip = request.form.get('zip_code')
+        city = request.form.get('city')
+        street = request.form.get('street')
+        house = request.form.get('house_number')
+        land = request.form.get('landline')
+        phone = request.form.get('phone_number')
+        pwd = request.form.get('password')
+
+        new_user = User(first_name=first, last_name=last, email=email, zip_code=zip, city=city, street=street, house_number=house,
+                        landline=land, phone_number=phone, password=generate_password_hash(pwd, method='sha256'))
+
+        validate_mail = User.query.filter_by(email=form.email.data).first()
+        if validate_mail:
+            flash('Email bereits registriert', 'danger')
+        db.session.add(new_user)
         db.session.commit()
-        login_user(visitor, remember=True)
+        login_user(new_user, remember=True)
         flash(f'Registrierung erfolgreich!', 'success')
         return redirect(url_for('home'))
-    return render_template('register.html', title='Registrierung', form=form)
+    return render_template('register.html', title='Registrierung', form=form, user=current_user)
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('home'))
-    # form = LoginForm()
-    # if form.validate_on_submit():
-    #     visitor = Visitor.query.filter_by(email=form.email.data).first()
-    #     if visitor and (visitor.password is form.password.data):
-    #         login_user(visitor, remember=form.remember.data)
-    #         return redirect(url_for('home'))
-    #     elif visitor.password is not form.password.data: #gleiches passwort wird nicht akzeptiert?!
-    #         flash('BUGGGY SHIT', 'danger')
-    #     else:
-    #         flash('Email oder Passwort falsch', 'danger')
-    # return render_template('login.html', title='Login', form=form)
+    form = LoginForm()
     if request.method == 'POST':
-        form = LoginForm()
-        email = request.form.get('email')
-        password = request.form.get('password')
+        email = form.email.data
+        password = form.password.data
+        user = User.query.filter_by(email=email).first()
 
-        visitor = Visitor.query.filer_by(email=email).first()
-        if visitor:
-            if check_password_hash(visitor.password, password):
+        if user:
+            if check_password_hash(user.password, password):
                 flash('Sie sind nun eingeloggt', 'success')
-                login_user(visitor, remember=form.remember.data)
+                login_user(user, remember=form.remember.data)
+                return redirect(url_for('home'))
             else:
                 flash('Falsches Passwort', 'danger')
 
         else: flash('Email nicht registriert!', 'danger')
+
+    return render_template('login.html', form=form, title='Login', user=current_user)
 
 
 @app.route('/logout')

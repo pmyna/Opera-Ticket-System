@@ -1,10 +1,10 @@
-from project import db, login_manager
+from project import db
 from datetime import *
 from flask_login import UserMixin
 
 
-class Visitor(db.Model, UserMixin):
-    customer_ID = db.Column(db.Integer, primary_key=True)
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
     zip_code = db.Column(db.Integer, nullable=False)
@@ -18,14 +18,14 @@ class Visitor(db.Model, UserMixin):
 
     @property
     def __repr__(self):
-        return f"Visitor('{self.customer_ID}', '{self.first_name}', '{self.last_name}', '{self.email}', '{self.password}')"
+        return f"User('{self.id}', '{self.first_name}', '{self.last_name}', '{self.email}', '{self.password}')"
 
     def get_id(self):
-        return self.customer_ID
+        return self.id
 
 
 class Opera(db.Model):
-    opera_ID = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
     body = db.Column(db.Text)
     show_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
