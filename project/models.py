@@ -14,7 +14,6 @@ class User(db.Model, UserMixin):
     landline = db.Column(db.Integer, nullable=True)
     phone_number = db.Column(db.Integer, nullable=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    purchase = db.Column(db.Integer, nullable=True)
     password = db.Column(db.String(60), nullable=False)
 
     @property
@@ -29,8 +28,17 @@ class Opera(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
     body = db.Column(db.Text)
-    show_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
-    language = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
-        return '<Opera %r>' % self.title
+        return
+
+    @property
+    def get_id(self):
+        return self.id
+
+
+class Show(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    opera = db.Column(db.Integer, db.ForeignKey('opera.id'))
+    show_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    language = db.Column(db.String(80), nullable=False)

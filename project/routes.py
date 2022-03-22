@@ -1,4 +1,5 @@
 from flask import *
+from sqlalchemy import *
 from project import app, db
 from project.form import *
 from project.models import *
@@ -14,17 +15,21 @@ def home():
 
 @app.route("/plan", methods=['GET', 'POST'])
 def plan():
-    form = PurchaseForm()
-    if request.method == 'GET':
-        User.purchase = request.form.get('purchase')
-        db.session.commit()
-        #return redirect(url_for('ticket'))
-    return render_template('plan.html', title='Spielplan & Kartenkauf', form=form, user=current_user)
+    opera = Opera.query.all()
+    show = Show.query.all()
+    # Make Pretty
+    # Add Ticket Kaufen Buttons
+    return render_template('plan.html', title='Spielplan & Kartenkauf', opera=opera, show=show, user=current_user)
 
 
 @app.route("/ticket", methods=['GET', 'POST'])
 @login_required
 def ticket():
+    # Render Template from Selection in /plan
+    # Select Loge/Parkett for Price
+    # Select Amount Tickets
+    # Calculate Price - from DB
+    # "Kaufen" Button + Bestätigung der Reservierung [Show Reservation Number - from DB]
     return render_template('ticket.html', title='Ticketkauf', user=current_user)
 
 
