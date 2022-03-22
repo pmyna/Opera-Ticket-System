@@ -12,10 +12,20 @@ def home():
     return render_template('home.html', user=current_user)
 
 
-@app.route("/plan")
-@login_required
+@app.route("/plan", methods=['GET', 'POST'])
 def plan():
-    return render_template('plan.html', title='Spielplan & Kartenkauf', user=current_user)
+    form = PurchaseForm()
+    if request.method == 'GET':
+        User.purchase = request.form.get('purchase')
+        db.session.commit()
+        #return redirect(url_for('ticket'))
+    return render_template('plan.html', title='Spielplan & Kartenkauf', form=form, user=current_user)
+
+
+@app.route("/ticket", methods=['GET', 'POST'])
+@login_required
+def ticket():
+    return render_template('ticket.html', title='Ticketkauf', user=current_user)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -39,14 +49,15 @@ def register():
         new_user = User(first_name=first, last_name=last, email=email, zip_code=zip, city=city, street=street, house_number=house,
                         landline=land, phone_number=phone, password=generate_password_hash(pwd, method='sha256'))
 
-        validate_mail = User.query.filter_by(email=form.email.data).first()
+        validate_mail = User.query.filter_by(email=email).first()
         if validate_mail:
             flash('Email bereits registriert', 'danger')
-        db.session.add(new_user)
-        db.session.commit()
-        login_user(new_user, remember=True)
-        flash(f'Registrierung erfolgreich!', 'success')
-        return redirect(url_for('home'))
+        else:
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user, remember=True)
+            flash(f'Registrierung erfolgreich!', 'success')
+            return redirect(url_for('home'))
     return render_template('register.html', title='Registrierung', form=form, user=current_user)
 
 
@@ -65,8 +76,8 @@ def login():
                 return redirect(url_for('home'))
             else:
                 flash('Falsches Passwort', 'danger')
-
-        else: flash('Email nicht registriert!', 'danger')
+        else:
+            flash('Email nicht registriert!', 'danger')
 
     return render_template('login.html', form=form, title='Login', user=current_user)
 

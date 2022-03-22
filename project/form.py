@@ -23,3 +23,9 @@ class LoginForm(FlaskForm):
     password = PasswordField('Passwort', [DataRequired(), Length(min=5, max=20)])
     remember = BooleanField('Remember me')
     login = SubmitField('Login')
+
+
+class PurchaseForm(FlaskForm):
+    date = StringField('Datum', [DataRequired()])
+    seat = StringField('Sitzplatz', [DataRequired()])
+    purchase = SubmitField('Karten kaufen')

@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
     landline = db.Column(db.Integer, nullable=True)
     phone_number = db.Column(db.Integer, nullable=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
+    purchase = db.Column(db.Integer, nullable=True)
     password = db.Column(db.String(60), nullable=False)
 
     @property

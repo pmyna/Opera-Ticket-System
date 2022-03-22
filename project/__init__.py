@@ -10,23 +10,24 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'e435f666e9f07eb13be460507c9c12b3'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
+
 # Setup and Run Database
 db = SQLAlchemy()
 db.init_app(app)
+
 
 from . import routes, models, form
 from .models import User
 
 
-def create_database(app):
-    if not path.exists('project/site.db'):
-        db.create_all(app=app)
+# Start with empty Database
+with app.app_context():
+    db.create_all(app=app)
 
-create_database(app)
 
 # Login Manager
 login_manager = LoginManager()
-login_manager.login_view = 'home'
+login_manager.login_view = 'plan'
 login_manager.init_app(app)
 
 

@@ -1,4 +1,56 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>Spielplan & Kartenkauf</h1>
+ <div id="accordion">
+<form method="get" action="">
+  <div class="card">
+    <div class="card-header">
+      <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
+         Zauberflöte
+      </a>
+    </div>
+    <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+      <div class="card-body">
+         <div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action">01.05.2022<div class="form-group" align="right">
+            {{ form.purchase(class="btn btn-outline-success") }}
+        </div></a>
+  <a href="#" class="list-group-item list-group-item-action">14.08.2022<div class="form-group" align="right">
+    {{ form.purchase(class="btn btn-outline-success") }}</div></a>
+  <a href="#" class="list-group-item list-group-item-action">23.10.2022<div class="form-group" align="right">
+    {{ form.purchase(class="btn btn-outline-success") }}</div></a>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTwo">
+        Aida
+      </a>
+        <button type="button" class="btn btn-outline-success ms-4" onclick="location.href = 'ticket';">Karten kaufen</button>
+    </div>
+    <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+      <div class="card-body">
+        Lorem ipsum..
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseThree">
+        Carmen
+      </a>
+        <button type="button" class="btn btn-outline-success ms-4" onclick="location.href = 'ticket';">Karten kaufen</button>
+    </div>
+    <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+      <div class="card-body">
+        Lorem ipsum..
+      </div>
+    </div>
+  </div>
+</form>
+</div>
 {% endblock content %}
