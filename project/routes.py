@@ -17,9 +17,10 @@ def home():
 def plan():
     opera = Opera.query.all()
     show = Show.query.all()
+    reservation = Reservation.query.all()
     # Make Pretty
     # Add Ticket Kaufen Buttons
-    return render_template('plan.html', title='Spielplan & Kartenkauf', opera=opera, show=show, user=current_user)
+    return render_template('plan.html', title='Spielplan & Kartenkauf', opera=opera, show=show, reservation=reservation, user=current_user)
 
 
 @app.route("/ticket", methods=['GET', 'POST'])
