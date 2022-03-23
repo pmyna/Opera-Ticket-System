@@ -43,6 +43,7 @@ class Show(db.Model):
     show_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
     language = db.Column(db.String(80), nullable=False)
 
+
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     kd_nr = db.Column(db.Integer, db.ForeignKey('user.id'))

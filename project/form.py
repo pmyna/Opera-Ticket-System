@@ -26,5 +26,5 @@ class LoginForm(FlaskForm):
 
 
 class PurchaseForm(FlaskForm):
-    show = IntegerField('Reservation')
-    purchase = SubmitField('Karten kaufen')
+    show = HiddenField('Show')
+    purchase = SubmitField('Karte kaufen')

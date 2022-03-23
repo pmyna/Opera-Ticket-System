@@ -18,22 +18,19 @@ def plan():
     form = PurchaseForm()
     opera = Opera.query.all()
     show = Show.query.all()
-    reservation = Reservation.query.all()
-    if request.method == 'POST':
-        new_reservation = Reservation(request.form.get('Reservation'))
-        db.session.add(new_reservation)
-        db.session.commit()
-    return render_template('plan.html', title='Spielplan & Kartenkauf', opera=opera, show=show, reservation=reservation, user=current_user)
+    def addRes():
+        if request.method == 'POST':
+            new_reservation = request.form.get('show')
+            db.session.add(new_reservation)
+            db.session.commit()
+        return redirect(url_for('ticket'))
+    return render_template('plan.html', title='Spielplan & Kartenkauf', reservation=addRes(),
+                           opera=opera, show=show, form=form, user=current_user)
 
 
 @app.route("/ticket", methods=['GET', 'POST'])
 @login_required
 def ticket():
-    # Render Template from Selection in /plan
-    # Select Loge/Parkett for Price
-    # Select Amount Tickets
-    # Calculate Price - from DB
-    # "Kaufen" Button + Bestätigung der Reservierung [Show Reservation Number - from DB]
     return render_template('ticket.html', title='Ticketkauf', user=current_user)
 
 

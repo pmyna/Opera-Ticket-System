@@ -10,7 +10,11 @@
                 <p>Datum & Uhrzeit: {{ s.show_date }}</p>
                 <p>Sprache: {{ s.language }}</p>
                 <pre>{{ op.body }}</pre>
-                <button class="btn btn-outline-success ms-5">Ticket kaufen</button>
+                <form>
+                    <div class="group-list mb-2" align="right"> #add form.show(show.id)
+                    <button class="btn btn-outline-success" onclick="reservation">Karte kaufen</button>
+                    </div>
+                </form>
             </li>
         {% endif %}
         {% endfor %}
