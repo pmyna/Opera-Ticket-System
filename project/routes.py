@@ -18,13 +18,20 @@ def plan():
     form = PurchaseForm()
     opera = Opera.query.all()
     show = Show.query.all()
-    def addRes():
-        if request.method == 'POST':
-            new_reservation = request.form.get('show')
-            db.session.add(new_reservation)
-            db.session.commit()
+    if form.validate_on_submit():
+        show_id = request.form.get('show')
+        kd_id = current_user.id
+
+        flash(f'In the IF', 'success')
+        new_reservation = Reservation(show=show_id, kd_nr=kd_id)
+        db.session.add(new_reservation)
+        db.session.commit()
+
+        flash(f'Did the commit', 'success')
         return redirect(url_for('ticket'))
-    return render_template('plan.html', title='Spielplan & Kartenkauf', reservation=addRes(),
+    else:
+        flash(f'BUGGS BUNNY', 'danger')
+    return render_template('plan.html', title='Spielplan & Kartenkauf',
                            opera=opera, show=show, form=form, user=current_user)
 
 

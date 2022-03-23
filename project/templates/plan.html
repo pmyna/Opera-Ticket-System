@@ -1,23 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>Spielplan & Kartenkauf</h1>
+<form>
+    {{ form.hidden_tag() }}
     {% for op in opera %}
        <h3>{{ op.title }}</h3>
         <ul class="list-group">
-        {% for s in show %}
-            {% if s.opera == op.id %}
-            <li class="list-group-item">
-                <p>Datum & Uhrzeit: {{ s.show_date }}</p>
+            <div class="list-group-item">
+                {% for s in show %} #loop is printed twice, how make it only once? Then submit should work
+                    {% if s.opera == op.id %}
                 <p>Sprache: {{ s.language }}</p>
                 <pre>{{ op.body }}</pre>
-                <form>
-                    <div class="group-list mb-2" align="right"> #add form.show(show.id)
-                    <button class="btn btn-outline-success" onclick="reservation">Karte kaufen</button>
+                <p>Datum & Uhrzeit: <select name="show" id="show" class="form-control">
+                    {% for time in show %}
+                    {% if time.opera == op.id %}
+                    <option value={{time.show_date}}>{{time.show_date}}</option>
+                    {% endif %}{% endfor %}</select>
+                </p>
+                    <div class="group-list mb-2" align="right">
+                    {{ form.purchase(class="btn btn-outline-success") }}
                     </div>
-                </form>
-            </li>
+            </div>
         {% endif %}
-        {% endfor %}
-        {% endfor %}
+            {% endfor %}
+            {% endfor %}
             </ul>
+    </form>
 {% endblock content %}
