@@ -15,11 +15,14 @@ def home():
 
 @app.route("/plan", methods=['GET', 'POST'])
 def plan():
+    form = PurchaseForm()
     opera = Opera.query.all()
     show = Show.query.all()
     reservation = Reservation.query.all()
-    # Make Pretty
-    # Add Ticket Kaufen Buttons
+    if request.method == 'POST':
+        new_reservation = Reservation(request.form.get('Reservation'))
+        db.session.add(new_reservation)
+        db.session.commit()
     return render_template('plan.html', title='Spielplan & Kartenkauf', opera=opera, show=show, reservation=reservation, user=current_user)
 
 

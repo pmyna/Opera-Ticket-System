@@ -1,15 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Spielplan & Kartenkauf</h1>
-<ul class="list-group list-group-flush">
+<h1>Spielplan & Kartenkauf</h1>
     {% for op in opera %}
-    <li class="list-group-item"> {{ op.title }}
+       <h3>{{ op.title }}</h3>
+        <ul class="list-group">
         {% for s in show %}
             {% if s.opera == op.id %}
-                <li class="list-group-item">{{ s.show_date }}</li>
-            {% endif %}
+            <li class="list-group-item">
+                <p>Datum & Uhrzeit: {{ s.show_date }}</p>
+                <p>Sprache: {{ s.language }}</p>
+                <pre>{{ op.body }}</pre>
+                <button class="btn btn-outline-success ms-5">Ticket kaufen</button>
+            </li>
+        {% endif %}
         {% endfor %}
-    {% endfor %}
-    </li>
-</ul>
+        {% endfor %}
+            </ul>
 {% endblock content %}

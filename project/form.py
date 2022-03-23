@@ -26,6 +26,5 @@ class LoginForm(FlaskForm):
 
 
 class PurchaseForm(FlaskForm):
-    date = StringField('Datum', [DataRequired()])
-    seat = StringField('Sitzplatz', [DataRequired()])
+    show = IntegerField('Reservation')
     purchase = SubmitField('Karten kaufen')
