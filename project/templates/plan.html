@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>Spielplan & Kartenkauf</h1>
-<form>
+<form method="post">
     {{ form.hidden_tag() }}
     {% for op in opera %}
     <div class="accordion" id="accordion">
@@ -13,21 +13,13 @@
     </h3>
       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="accordion">
       <div class="accordion-body">
-                    {% for s in show %}
-                    {% if s.opera == op.id %}
-                <h4>Sprache: {{ s.language }}</h4>
+          {% for s in show %}
+            {% if s.opera == op.id %}
+             <h4>Datum & Uhrzeit: {{ s.show_date.strftime("%Y-%m-%d, %H:%M") }}</h4>
+                <h6>Sprache: {{ s.language }}</h6>
                 <pre>{{ op.body }}</pre>
-                 <p>Datum & Uhrzeit:
-                     <select name="show" id="show" class="form-control">
-                    {% for time in show %}
-                    {% if time.opera == op.id %}
-                        <option value={{time.show_date}}>{{time.show_date}}</option>
-                    {% endif %}{% endfor %}</select>
-                </p>
-                    <div class="group-list mb-2" align="right">
-                    {{ form.purchase(class="btn btn-outline-success") }}
-                    </div>
-            {% endif %}
+                <button class="btn btn-outline-success mb-4" name="show" value={{s.id}}>Karte kaufen</button>
+                {% endif %}
             {% endfor %}
       </div>
       </div>

@@ -17,17 +17,15 @@ def home():
 def plan():
     form = PurchaseForm()
     opera = Opera.query.all()
-    show = Show.query.all()
-    if form.validate_on_submit():
+    show = Show.query.order_by("show_date").all()
+    if request.method == 'POST':
         show_id = request.form.get('show')
         kd_id = current_user.id
 
-        flash(f'In the IF', 'success')
         new_reservation = Reservation(show=show_id, kd_nr=kd_id)
         db.session.add(new_reservation)
         db.session.commit()
 
-        flash(f'Did the commit', 'success')
         return redirect(url_for('ticket'))
     else:
         flash(f'BUGGS BUNNY', 'danger')
