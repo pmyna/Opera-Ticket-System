@@ -37,7 +37,8 @@ def load_user(id):
 opera1 = Opera(title='Zauberflöte', body='Cool dudes with a Flute')
 opera2 = Opera(title='Carmen')
 opera3 = Opera(title='Aida', body='Egypt Stuff')
-show1 = Show(opera=1, show_date=datetime(2022, 4, 12, 20, 15), language='German')
+show1 = Show(opera=1, show_date=datetime(2022, 4, 12, 20, 15), language='English')
+show1 = Show(opera=1, show_date=datetime(2022, 4, 12, 18, 30), language='English')
 show2 = Show(opera=2, show_date=datetime(2022, 4, 18, 19, 00), language='Italian')
 show3 = Show(opera=1, show_date=datetime(2022, 4, 12, 22, 15), language='German')
 

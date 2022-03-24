@@ -4,26 +4,35 @@
 <form>
     {{ form.hidden_tag() }}
     {% for op in opera %}
-       <h3>{{ op.title }}</h3>
-        <ul class="list-group">
-            <div class="list-group-item">
-                {% for s in show %} #loop is printed twice, how make it only once? Then submit should work
+    <div class="accordion" id="accordion">
+  <div class="accordion-item">
+    <h3 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          {{ op.title }}
+      </button>
+    </h3>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="accordion">
+      <div class="accordion-body">
+                    {% for s in show %}
                     {% if s.opera == op.id %}
-                <p>Sprache: {{ s.language }}</p>
+                <h4>Sprache: {{ s.language }}</h4>
                 <pre>{{ op.body }}</pre>
-                <p>Datum & Uhrzeit: <select name="show" id="show" class="form-control">
+                 <p>Datum & Uhrzeit:
+                     <select name="show" id="show" class="form-control">
                     {% for time in show %}
                     {% if time.opera == op.id %}
-                    <option value={{time.show_date}}>{{time.show_date}}</option>
+                        <option value={{time.show_date}}>{{time.show_date}}</option>
                     {% endif %}{% endfor %}</select>
                 </p>
                     <div class="group-list mb-2" align="right">
                     {{ form.purchase(class="btn btn-outline-success") }}
                     </div>
-            </div>
-        {% endif %}
+            {% endif %}
             {% endfor %}
+      </div>
+      </div>
+  </div>
+    </div>
             {% endfor %}
-            </ul>
     </form>
 {% endblock content %}
