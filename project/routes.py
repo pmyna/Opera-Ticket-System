@@ -20,23 +20,30 @@ def plan():
     show = Show.query.order_by("show_date").all()
     if request.method == 'POST':
         show_id = request.form.get('show')
-        kd_id = current_user.id
+        if current_user.is_authenticated:
+            kd_id = current_user.id
+        else:
+            flash(f'Sie müssen für die Kartenreservierung einloggt sein!', 'warning')
+            return redirect(url_for('plan'))
 
         new_reservation = Reservation(show=show_id, kd_nr=kd_id)
         db.session.add(new_reservation)
         db.session.commit()
-
+        flash(f'Reservierung durchgeführt!', 'success')
         return redirect(url_for('ticket'))
-    else:
-        flash(f'BUGGS BUNNY', 'danger')
     return render_template('plan.html', title='Spielplan & Kartenkauf',
                            opera=opera, show=show, form=form, user=current_user)
 
 
 @app.route("/ticket", methods=['GET', 'POST'])
-@login_required
 def ticket():
-    return render_template('ticket.html', title='Ticketkauf', user=current_user)
+    if current_user.is_authenticated:
+        kd_nr = current_user.id
+    else:
+        flash(f'Sie müssen für die Kartenreservierung einloggt sein!', 'warning')
+        return redirect(url_for('plan'))
+    reservation = Reservation.query.filter_by(kd_nr=kd_nr).order_by(Reservation.id.desc()).first()
+    return render_template('ticket.html', title='Ticketkauf', reservation=reservation, user=current_user)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -67,7 +74,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            flash(f'Registrierung erfolgreich!', 'success')
+            flash(f'Registrierung erfolgreich! Sie sind nun eingeloggt.', 'success')
             return redirect(url_for('home'))
     return render_template('register.html', title='Registrierung', form=form, user=current_user)
 

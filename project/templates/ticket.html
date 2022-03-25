@@ -1,4 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>Reservierungsbestätigung</h1>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title"> Ticket erfolgreich gebucht</h3>
+            <p class="card-text">
+                Wir freuen uns Sie in der Opera Mahera begrüßen zu dürfen!
+            </p>
+             <p class="card-text">
+            <h6>Bitte halten Sie an der Kassa ihre Reservierungsnummer bereit: </h6>
+            <div class="mx-auto" style="width:100px">
+                <div class="d-grid gap-3">
+                    <div class="p-2 border border-3" align="center">
+                        {{ reservation.id }}
+                    </div>
+                </div>
+            </div>
+            </p>
+
+        </div>
+    </div>
+
 {% endblock content %}
