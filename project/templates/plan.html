@@ -16,7 +16,7 @@
           <pre>{{ op.body }}</pre>
           {% for s in show %}
             {% if s.opera == op.id %}
-             <h5>Datum & Uhrzeit: {{ s.show_date.strftime("%Y-%m-%d, %H:%M") }}</h5>
+             <h5>Datum & Uhrzeit: {{ s.show_date.strftime("%d-%m-%Y, %H:%M") }}</h5>
                 <h6>Sprache: {{ s.language }}</h6>
                 <button class="btn btn-outline-success mb-4" name="show" value={{s.id}}>Karte reservieren</button>
                 {% endif %}
