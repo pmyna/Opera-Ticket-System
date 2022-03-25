@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
 class Opera(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
-    body = db.Column(db.Text)
+    body = db.Column(db.String(999))
 
     def __repr__(self):
         return

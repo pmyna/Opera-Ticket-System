@@ -11,13 +11,13 @@
           {{ op.title }}
       </button>
     </h3>
-      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="accordion">
+      <div id="collapseOne" class="accordion-collapse collapse hide" aria-labelledby="headingOne" data-bs-parent="accordion">
       <div class="accordion-body">
+          <pre>{{ op.body }}</pre>
           {% for s in show %}
             {% if s.opera == op.id %}
-             <h4>Datum & Uhrzeit: {{ s.show_date.strftime("%Y-%m-%d, %H:%M") }}</h4>
+             <h5>Datum & Uhrzeit: {{ s.show_date.strftime("%Y-%m-%d, %H:%M") }}</h5>
                 <h6>Sprache: {{ s.language }}</h6>
-                <pre>{{ op.body }}</pre>
                 <button class="btn btn-outline-success mb-4" name="show" value={{s.id}}>Karte reservieren</button>
                 {% endif %}
             {% endfor %}
