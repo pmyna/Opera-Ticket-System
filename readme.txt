@@ -1,4 +1,11 @@
-1) Ordner Datenbanken in PyCharm als working directory öffnen
+## About
+
+Abschlussprojekt für den Kurs Relationale Datenbanken.
+Login- und Ticketbuchungssystem sind mit einem SQL-Server verbunden.
+
+## Anleitung
+
+1) Ordner Datenbanken als Working Directory öffnen
 
 2) Falls notwendig Packages und Requirements installieren
 
